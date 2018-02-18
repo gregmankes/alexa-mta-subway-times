@@ -40,6 +40,12 @@
 			"tree": true
 		},
 		{
+			"checksumSHA1": "u/jWxHWet3Q9msxuMA67/G1uuS0=",
+			"path": "github.com/ericdaugherty/alexa-skills-kit-golang",
+			"revision": "5669a59bb223f3afeace7a8f8d1cf4ec938daba1",
+			"revisionTime": "2018-02-17T00:27:49Z"
+		},
+		{
 			"checksumSHA1": "WX1+2gktHcBmE9MGwFSGs7oqexU=",
 			"path": "github.com/golang/protobuf/proto",
 			"revision": "bbd03ef6da3a115852eaf24c8a1c46aeb39aa175",

@@ -1,18 +1,23 @@
 package main
 
 import (
+	"context"
 	"encoding/json"
 	"io/ioutil"
 	"log"
 
-	"github.com/aws/aws-lambda-go/events"
 	"github.com/aws/aws-lambda-go/lambda"
+	alexa "github.com/ericdaugherty/alexa-skills-kit-golang"
+	"github.com/gregmankes/mta-alexa/handlers"
 )
 
-var apiKey string
+var (
+	apiKey string
+	axa    alexa.Alexa
+)
 
-func Handler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
-	return events.APIGatewayProxyResponse{}, nil
+func Handler(ctx context.Context, requestEnv *alexa.RequestEnvelope) (interface{}, error) {
+	return axa.ProcessRequest(requestEnv)
 }
 
 func main() {
@@ -28,5 +33,12 @@ func main() {
 		return
 	}
 	apiKey = cfg["apiKey"].(string)
+	applicationID := cfg["applicationId"].(string)
+	axa = alexa.Alexa{
+		ApplicationID: applicationID,
+		RequestHandler: handlers.CommuteTimes{
+			APIKey: apiKey,
+		},
+	}
 	lambda.Start(Handler)
 }
