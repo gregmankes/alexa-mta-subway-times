@@ -33,16 +33,17 @@
 			"revisionTime": "2018-02-17T03:26:43Z"
 		},
 		{
+			"checksumSHA1": "hkj/x4FBcfASpnnnrJxsT2y9hfg=",
+			"path": "github.com/davecgh/go-spew",
+			"revision": "87df7c60d5820d0f8ae11afede5aa52325c09717",
+			"revisionTime": "2018-01-29T09:57:49Z",
+			"tree": true
+		},
+		{
 			"checksumSHA1": "WX1+2gktHcBmE9MGwFSGs7oqexU=",
 			"path": "github.com/golang/protobuf/proto",
 			"revision": "bbd03ef6da3a115852eaf24c8a1c46aeb39aa175",
 			"revisionTime": "2018-02-02T18:43:18Z"
-		},
-		{
-			"checksumSHA1": "3GGKTEYFRX6CWR+FNzPRc/ryrbk=",
-			"path": "github.com/google/gtfs-realtime-bindings/golang/gtfs",
-			"revision": "32c4ed293b00ce7bd26c01d08638f28ae646fd8d",
-			"revisionTime": "2017-09-05T00:47:24Z"
 		}
 	],
 	"rootPath": "github.com/gregmankes/mta-alexa"
