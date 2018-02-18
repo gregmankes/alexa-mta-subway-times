@@ -1,0 +1,49 @@
+{
+	"comment": "",
+	"ignore": "test",
+	"package": [
+		{
+			"checksumSHA1": "OF/FlsdnL1JiA+l4N3NEkrDuLZ0=",
+			"path": "github.com/aws/aws-lambda-go",
+			"revision": "8dfe1e7a087551a29720be6ab9bd8e7d7c24c5be",
+			"revisionTime": "2018-02-17T03:26:43Z"
+		},
+		{
+			"checksumSHA1": "pYA7gjv4yLw6y3/fTMKBLOQ87qI=",
+			"path": "github.com/aws/aws-lambda-go/events",
+			"revision": "8dfe1e7a087551a29720be6ab9bd8e7d7c24c5be",
+			"revisionTime": "2018-02-17T03:26:43Z"
+		},
+		{
+			"checksumSHA1": "uI0hFuHj5Amsq+6TzWcczBIdWZY=",
+			"path": "github.com/aws/aws-lambda-go/lambda",
+			"revision": "8dfe1e7a087551a29720be6ab9bd8e7d7c24c5be",
+			"revisionTime": "2018-02-17T03:26:43Z"
+		},
+		{
+			"checksumSHA1": "d4ehJWLS4YsqFG825pgwdvKDB6A=",
+			"path": "github.com/aws/aws-lambda-go/lambda/messages",
+			"revision": "8dfe1e7a087551a29720be6ab9bd8e7d7c24c5be",
+			"revisionTime": "2018-02-17T03:26:43Z"
+		},
+		{
+			"checksumSHA1": "f9MhOwQHveaPVWO6trwfqHa+W0M=",
+			"path": "github.com/aws/aws-lambda-go/lambdacontext",
+			"revision": "8dfe1e7a087551a29720be6ab9bd8e7d7c24c5be",
+			"revisionTime": "2018-02-17T03:26:43Z"
+		},
+		{
+			"checksumSHA1": "WX1+2gktHcBmE9MGwFSGs7oqexU=",
+			"path": "github.com/golang/protobuf/proto",
+			"revision": "bbd03ef6da3a115852eaf24c8a1c46aeb39aa175",
+			"revisionTime": "2018-02-02T18:43:18Z"
+		},
+		{
+			"checksumSHA1": "3GGKTEYFRX6CWR+FNzPRc/ryrbk=",
+			"path": "github.com/google/gtfs-realtime-bindings/golang/gtfs",
+			"revision": "32c4ed293b00ce7bd26c01d08638f28ae646fd8d",
+			"revisionTime": "2017-09-05T00:47:24Z"
+		}
+	],
+	"rootPath": "github.com/gregmankes/mta-alexa"
+}
