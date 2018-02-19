@@ -4,3 +4,6 @@ config.json
 deployment.zip
 mta.bin
 mta/api_test.go
+stops.csv
+.*
+!.gitignore
