@@ -60,8 +60,8 @@ var (
 		Timeout: time.Duration(10) * time.Second,
 	}
 	directionMap = map[string]string{
-		"north":  "N",
-		"sourth": "S",
+		"NORTH": "N",
+		"SOUTH": "S",
 	}
 )
 
@@ -100,9 +100,8 @@ func GetFeedData(apiKey, lineName, stop, direction string) ([]time.Duration, err
 	if err != nil {
 		return nil, err
 	}
-	cm := getClosestFromStopResults(stopResults, stop)
 	stopMap := generateStopMap(stopResults)
-	stopID := stopMap[cm][directionMap[strings.ToLower(direction)]]
+	stopID := stopMap[getClosestFromStopResults(stopResults, strings.ToUpper(stop))][directionMap[strings.ToUpper(direction)]]
 	lineStopMap, err := sendReq(apiKey, feedID)
 	if err != nil {
 		return nil, err
@@ -117,12 +116,11 @@ func getClosestFromStopResults(stopResults *models.SubwayStopResults, stop strin
 	for _, stopResult := range stopResults.Results {
 		wordsToTest = append(wordsToTest, strings.ToUpper(stopResult.Name))
 	}
-	fmt.Println(wordsToTest)
 	matches := fuzzy.Find(stop, wordsToTest)
 	if len(matches) == 0 {
 		return ""
 	}
-	return matches[0]
+	return strings.ToUpper(matches[0])
 }
 
 func getDurations(now time.Time, stopTimes []time.Time) []time.Duration {
