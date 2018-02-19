@@ -82,20 +82,25 @@ func (c *CommuteTimes) formatCommuteIntentOutput(intent alexa.Intent) (string, e
 	if subway.Value == "" || stop.Value == "" || direction.Value == "" {
 		return "", fmt.Errorf("Error: not enough values for getting the mta subway times")
 	}
+	log.Printf("Subway: %s, Stop: %s, Direction %s", subway.Value, stop.Value, direction.Value)
 	durations, err := mta.GetFeedData(c.APIKey, subway.Value, stop.Value, direction.Value)
 	if err != nil {
 		return "", fmt.Errorf("Error getting the subway durations: %s", err)
 	}
 	durationStrings := []string{}
-	for _, d := range durations {
-		durationStrings = append(durationStrings, fmt.Sprintf("%1.2f", d.Minutes()))
+	for i := 0; i < len(durations) && i < maxSubwayDurations; i++ {
+		durationStrings = append(durationStrings, fmt.Sprintf("%1.2f", durations[i].Minutes()))
 	}
-	responseString := fmt.Sprintf("The next %d stops on the %s line at the %s stop going %s are %s",
+	minuteString := strings.Join(durationStrings, ", ")
+	if minuteString == "" {
+		return "", fmt.Errorf("Error getting the subway durations: no durations returned from mta")
+	}
+	responseString := fmt.Sprintf("The next %d %s trains at the %s stop going %s are coming in %s minutes",
 		maxSubwayDurations,
 		subway.Value,
 		stop.Value,
 		direction.Value,
-		strings.Join(durationStrings[0:maxSubwayDurations], ", "),
+		minuteString,
 	)
 	return responseString, nil
 }

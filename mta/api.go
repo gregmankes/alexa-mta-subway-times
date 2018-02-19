@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
+	"log"
 	"net/http"
 	"net/url"
 	"sort"
@@ -13,6 +14,7 @@ import (
 	"github.com/golang/protobuf/proto"
 	"github.com/gregmankes/mta-alexa/models"
 	"github.com/gregmankes/mta-alexa/transit_realtime"
+	"github.com/schollz/closestmatch"
 )
 
 type Feed int
@@ -98,13 +100,25 @@ func GetFeedData(apiKey, lineName, stop, direction string) ([]time.Duration, err
 	if err != nil {
 		return nil, err
 	}
+
 	stopMap := generateStopMap(stopResults)
-	stopID := stopMap[stop][directionMap[strings.ToLower(direction)]]
+	stopID := stopMap[getClosestFromStopResults(stopResults, stop)][directionMap[strings.ToLower(direction)]]
 	lineStopMap, err := sendReq(apiKey, feedID)
 	if err != nil {
 		return nil, err
 	}
-	return getDurations(time.Now(), lineStopMap[strings.ToUpper(lineName)][stopID]), nil
+	now := time.Now()
+	log.Printf("Now: %s, StopID: %s", now.String(), stopID)
+	return getDurations(now, lineStopMap[strings.ToUpper(lineName)][stopID]), nil
+}
+
+func getClosestFromStopResults(stopResults *models.SubwayStopResults, stop string) string {
+	wordsToTest := []string{}
+	for _, stopResult := range stopResults.Results {
+		wordsToTest = append(wordsToTest, strings.ToUpper(stopResult.Name))
+	}
+	cm := closestmatch.New(wordsToTest, []int{2})
+	return cm.Closest(strings.ToUpper(stop))
 }
 
 func getDurations(now time.Time, stopTimes []time.Time) []time.Duration {
@@ -145,10 +159,10 @@ func sendReq(apiKey string, feedID Feed) (map[string]map[string][]time.Time, err
 func generateStopMap(stopResults *models.SubwayStopResults) map[string]map[string]string {
 	stopMap := make(map[string]map[string]string)
 	for _, stopResult := range stopResults.Results {
-		if _, ok := stopMap[stopResult.Name]; !ok {
-			stopMap[stopResult.Name] = make(map[string]string)
+		if _, ok := stopMap[strings.ToUpper(stopResult.Name)]; !ok {
+			stopMap[strings.ToUpper(stopResult.Name)] = make(map[string]string)
 		}
-		stopMap[stopResult.Name][string(stopResult.ID[len(stopResult.ID)-1])] = stopResult.ID
+		stopMap[strings.ToUpper(stopResult.Name)][string(stopResult.ID[len(stopResult.ID)-1])] = stopResult.ID
 	}
 	return stopMap
 }
