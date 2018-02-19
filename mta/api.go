@@ -55,7 +55,7 @@ var (
 		"Z": JZFeed,
 	}
 	client = http.Client{
-		Timeout: time.Duration(1) * time.Second,
+		Timeout: time.Duration(10) * time.Second,
 	}
 	directionMap = map[string]string{
 		"north":  "N",

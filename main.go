@@ -2,9 +2,8 @@ package main
 
 import (
 	"context"
-	"encoding/json"
-	"io/ioutil"
 	"log"
+	"os"
 
 	"github.com/aws/aws-lambda-go/lambda"
 	alexa "github.com/ericdaugherty/alexa-skills-kit-golang"
@@ -21,22 +20,17 @@ func Handler(ctx context.Context, requestEnv *alexa.RequestEnvelope) (interface{
 }
 
 func main() {
-	buf, err := ioutil.ReadFile("config.json")
-	if err != nil {
-		log.Fatalf("Error loading config file: %s", err)
-		return
+	apiKey = os.Getenv("API_KEY")
+	if apiKey == "" {
+		log.Fatalf("Error getting the api key")
 	}
-	cfg := map[string]interface{}{}
-	err = json.Unmarshal(buf, &cfg)
-	if err != nil {
-		log.Fatalf("Error unmarshaling the config file")
-		return
+	applicationID := os.Getenv("APPLICATION_ID")
+	if applicationID == "" {
+		log.Fatalf("Error getting the application ID")
 	}
-	apiKey = cfg["apiKey"].(string)
-	applicationID := cfg["applicationId"].(string)
 	axa = alexa.Alexa{
 		ApplicationID: applicationID,
-		RequestHandler: handlers.CommuteTimes{
+		RequestHandler: &handlers.CommuteTimes{
 			APIKey: apiKey,
 		},
 	}
