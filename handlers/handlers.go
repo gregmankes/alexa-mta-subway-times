@@ -88,8 +88,12 @@ func (c *CommuteTimes) formatCommuteIntentOutput(intent alexa.Intent) (string, e
 		return "", fmt.Errorf("Error getting the subway durations: %s", err)
 	}
 	durationStrings := []string{}
-	for i := 0; i < len(durations) && i < maxSubwayDurations; i++ {
-		durationStrings = append(durationStrings, fmt.Sprintf("%1.2f", durations[i].Minutes()))
+	j := 0
+	for i := 0; i < len(durations) && j < maxSubwayDurations; i++ {
+		if int(durations[i]) < 0 {
+			durationStrings = append(durationStrings, fmt.Sprintf("%1.2f", durations[i].Minutes()))
+			j++
+		}
 	}
 	minuteString := strings.Join(durationStrings, ", ")
 	if minuteString == "" {

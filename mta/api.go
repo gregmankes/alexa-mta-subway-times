@@ -14,7 +14,7 @@ import (
 	"github.com/golang/protobuf/proto"
 	"github.com/gregmankes/mta-alexa/models"
 	"github.com/gregmankes/mta-alexa/transit_realtime"
-	"github.com/schollz/closestmatch"
+	"github.com/renstrom/fuzzysearch/fuzzy"
 )
 
 type Feed int
@@ -100,9 +100,9 @@ func GetFeedData(apiKey, lineName, stop, direction string) ([]time.Duration, err
 	if err != nil {
 		return nil, err
 	}
-
+	cm := getClosestFromStopResults(stopResults, stop)
 	stopMap := generateStopMap(stopResults)
-	stopID := stopMap[getClosestFromStopResults(stopResults, stop)][directionMap[strings.ToLower(direction)]]
+	stopID := stopMap[cm][directionMap[strings.ToLower(direction)]]
 	lineStopMap, err := sendReq(apiKey, feedID)
 	if err != nil {
 		return nil, err
@@ -117,8 +117,12 @@ func getClosestFromStopResults(stopResults *models.SubwayStopResults, stop strin
 	for _, stopResult := range stopResults.Results {
 		wordsToTest = append(wordsToTest, strings.ToUpper(stopResult.Name))
 	}
-	cm := closestmatch.New(wordsToTest, []int{2})
-	return cm.Closest(strings.ToUpper(stop))
+	fmt.Println(wordsToTest)
+	matches := fuzzy.Find(stop, wordsToTest)
+	if len(matches) == 0 {
+		return ""
+	}
+	return matches[0]
 }
 
 func getDurations(now time.Time, stopTimes []time.Time) []time.Duration {

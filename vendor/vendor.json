@@ -52,10 +52,10 @@
 			"revisionTime": "2018-02-02T18:43:18Z"
 		},
 		{
-			"checksumSHA1": "y6vlEAxNqpwYBmVsfC17WD53tAU=",
-			"path": "github.com/schollz/closestmatch",
-			"revision": "19d3b334fdfcb0151de79319f1fe1dfc41de758c",
-			"revisionTime": "2017-09-08T20:46:16Z"
+			"checksumSHA1": "DF3jZEw4lCq/SEaC7DIl/R+7S70=",
+			"path": "github.com/renstrom/fuzzysearch/fuzzy",
+			"revision": "2d205ac6ec17a839a94bdbfd16d2fa6c6dada2e0",
+			"revisionTime": "2016-03-31T20:48:55Z"
 		}
 	],
 	"rootPath": "github.com/gregmankes/mta-alexa"
