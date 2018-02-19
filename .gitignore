@@ -3,3 +3,4 @@ ex.json
 config.json
 deployment.zip
 mta.bin
+mta/api_test.go
